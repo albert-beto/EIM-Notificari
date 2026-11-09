@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        PASUL 1: PERMISIUNEA
+        - se pune AICI, in <manifest>, IN AFARA lui <application>
+        - fara ea, pe Android 13+ notificarile nu apar deloc (nici nu crapa, doar nu se vad)
+    -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+
+        <!-- activitatea principala: are MAIN + LAUNCHER, deci apare in meniul telefonului -->
+        <activity
+            android:name=".NotificationMainActivity"
+            android:exported="true"
+            android:launchMode="singleTop">
+            <!--
+                launchMode="singleTop": daca activitatea e deja deschisa si apesi pe notificare,
+                NU se creeaza o activitate noua; in schimb se apeleaza onNewIntent() pe cea existenta
+            -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- serviciul din exemplul 3 (trimite notificare din serviciu) -->
+        <service
+            android:name=".NotificationService"
+            android:enabled="true"
+            android:exported="false" />
+
+    </application>
+</manifest>
